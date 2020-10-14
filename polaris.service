@@ -1,0 +1,28 @@
+[Unit]
+Description=Polaris server
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=sudo
+LimitNOFILE=1024
+ExecStart=/home/pierre/servBin
+
+Restart=on-failure
+RestartSec=10
+startLimitIntervalSec=60
+
+WorkingDirectory=/home/pierre
+
+PermissionsStartOnly=true
+ExecStartPre=/bin/mkdir -p /var/log/polaris
+ExecStartPre=/bin/chown syslog:adm /var/log/polaris
+ExecStartPre=/bin/chmod 755 /var/log/polaris
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=polaris
+
+
+[Install]
+WantedBy=multi-user.target
